@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FastVid Downloader</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+  <div class="header-bar">
+    <div class="site-title">FastVid Downloader</div>
+    <div class="logo-text">🚀 FastVid</div>
+  </div>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul>
+        <li class="app-icon" data-app="instagram">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
+          <span>Instagram</span>
+        </li>
+        <li class="app-icon" data-app="youtube">
+          <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
+          <span>YouTube</span>
+        </li>
+        <li class="app-icon" data-app="facebook">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" />
+          <span>Facebook</span>
+        </li>
+        <li class="app-icon" data-app="tiktok">
+          <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
+          <span>TikTok</span>
+        </li>
+        <li class="app-icon" data-app="twitter">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" />
+          <span>Twitter</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>Download Your Favorite Media</h1>
+      <p class="sub-heading">Choose a platform and download reels, videos, highlights & more.</p>
+
+      <!-- Sub Options -->
+      <div class="sub-options" id="subOptions"></div>
+
+      <!-- Download Form -->
+      <form class="download-form" id="downloadForm">
+        <input type="text" name="url" id="urlInput" placeholder="Paste URL here..." required />
+        <input type="hidden" name="platform" id="platformInput" />
+        <input type="hidden" name="contentType" id="contentTypeInput" />
+        <button type="submit">Download</button>
+      </form>
+
+      <!-- Progress -->
+      <div class="progress-box" id="progressBox">
+        Waiting for input...
+      </div>
+
+      <!-- Instructions -->
+      <div class="instructions">
+        <h2>How to Download</h2>
+        <ol>
+          <li>Choose the app (Instagram, YouTube, etc.)</li>
+          <li>Select what you want to download (Reels, Profile, Highlights, etc.)</li>
+          <li>Paste the media URL in the box</li>
+          <li>Click Download!</li>
+        </ol>
+        <p class="note">Note: Use only content you have rights to download. Respect platform rules.</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        &copy; 2025 FastVid Downloader. All rights reserved.
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download Successful - FastVid</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .success-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      padding: 40px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .success-container h2 {
+      font-size: 28px;
+      color: #2ecc71;
+    }
+
+    .success-container p {
+      margin: 20px 0 10px;
+      font-size: 16px;
+    }
+
+    .download-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .download-link:hover {
+      background-color: #2980b9;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      color: #555;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="success-container">
+    <h2>✅ Download Complete!</h2>
+    <p>Your file is ready to be downloaded:</p>
+    <a href="{{ url_for('serve_file', filename=filename) }}" download class="download-link">
+      📥 Download {{ filename }}
+    </a>
+    <a href="/" class="back-link">⬅ Back to Home</a>
+  </div>
+</body>
+</html>
