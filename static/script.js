@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const subOptionsContainer = document.querySelector('.sub-options');
   const platformInput = document.getElementById('platformInput');
   const contentTypeInput = document.getElementById('contentTypeInput');
-  const urlInput = document.getElementById('urlInput');
   const progressBox = document.getElementById('progressBox');
   const form = document.querySelector('.download-form');
+  const urlInput = document.getElementById('urlInput');
 
   let selectedPlatform = '';
   let selectedContentType = '';
@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
     subOptionsContainer.innerHTML = '';
     selectedContentType = '';
     contentTypeInput.value = '';
+    urlInput.value = '';
+    progressBox.textContent = 'Waiting for input...';
   }
 
   function renderSubOptions(platform) {
@@ -65,13 +67,12 @@ document.addEventListener('DOMContentLoaded', function () {
     icon.addEventListener('click', () => {
       selectedPlatform = icon.dataset.app;
       platformInput.value = selectedPlatform;
-      urlInput.value = ''; // Clear URL on platform change
       renderSubOptions(selectedPlatform);
       progressBox.textContent = `Selected: ${selectedPlatform}`;
     });
   });
 
-  form.addEventListener('submit', async function (e) {
+  form.addEventListener('submit', e => {
     e.preventDefault();
 
     if (!selectedPlatform || !selectedContentType) {
@@ -80,52 +81,38 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const url = urlInput.value.trim();
-    if (!url || !url.toLowerCase().includes(selectedPlatform)) {
-      progressBox.textContent = `❌ The URL must belong to ${selectedPlatform}`;
+    if (!url || !url.includes(selectedPlatform)) {
+      progressBox.textContent = `❌ The URL must belong to ${selectedPlatform}.`;
       return;
     }
 
+    // Start spinner
     let percent = 0;
-    progressBox.textContent = 'Starting download...';
-    let spinnerInterval = setInterval(() => {
-      percent += 5;
+    progressBox.innerHTML = `Downloading: <span id="downloadPercent">0%</span>`;
+    const percentDisplay = document.getElementById('downloadPercent');
+
+    const interval = setInterval(() => {
+      percent += 10;
       if (percent > 100) percent = 100;
-      progressBox.textContent = `Downloading: ${percent}%`;
-    }, 200);
+      percentDisplay.textContent = `${percent}%`;
+    }, 300);
 
-    try {
-      const response = await fetch('/download', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          url: url,
-          platform: selectedPlatform,
-          contentType: selectedContentType
-        })
-      });
-
-      clearInterval(spinnerInterval);
-
-      if (response.ok) {
-        const data = await response.json();
+    fetch('/download', {
+      method: 'POST',
+      body: new FormData(form)
+    })
+      .then(response => response.json())
+      .then(data => {
+        clearInterval(interval);
         if (data.success) {
-          progressBox.textContent = '✅ Download complete!';
-          // Trigger download
-          const link = document.createElement('a');
-          link.href = `/download/${data.filename}`;
-          link.download = data.filename;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          progressBox.innerHTML = `✅ Download complete! <a href="/download/${data.filename}" target="_blank" download>Click to Download</a>`;
         } else {
           progressBox.textContent = `❌ Error: ${data.error}`;
         }
-      } else {
-        progressBox.textContent = '❌ Download failed. Try again.';
-      }
-    } catch (error) {
-      clearInterval(spinnerInterval);
-      progressBox.textContent = '❌ Download failed: ' + error.message;
-    }
+      })
+      .catch(err => {
+        clearInterval(interval);
+        progressBox.textContent = `❌ Download failed: ${err.message}`;
+      });
   });
 });

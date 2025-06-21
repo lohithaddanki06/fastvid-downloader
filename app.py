@@ -12,14 +12,13 @@ def home():
 
 @app.route('/download', methods=['POST'])
 def download():
-    data = request.get_json()
-    url = data.get('url')
-    platform = data.get('platform')
-    content_type = data.get('contentType')
+    url = request.form.get('url')
+    platform = request.form.get('platform')
+    content_type = request.form.get('contentType')
 
     if not url or not platform or not content_type:
         return jsonify(success=False, error="Incomplete form data."), 400
-    if platform.lower() not in url.lower():
+    if platform not in url.lower():
         return jsonify(success=False, error=f"URL must be from {platform}"), 400
 
     try:
@@ -30,7 +29,10 @@ def download():
 
 @app.route('/download/<filename>')
 def serve_file(filename):
-    return send_from_directory(DOWNLOAD_FOLDER, filename, as_attachment=True)
+    try:
+        return send_from_directory(DOWNLOAD_FOLDER, filename, as_attachment=True)
+    except Exception as e:
+        return f"File not found: {str(e)}", 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)

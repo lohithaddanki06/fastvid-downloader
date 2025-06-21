@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FastVid Downloader</title>
+  <title>FastVid Downloader 🚀 Download Social Media Videos Easily!</title>
+  <meta name="description" content="FastVid Downloader helps you download videos from Instagram, YouTube, Facebook, Twitter, and TikTok quickly and easily on mobile." />
+  <meta property="og:title" content="FastVid Downloader 🚀 Download Social Media Videos Easily!" />
+  <meta property="og:description" content="Download Instagram Reels, YouTube Videos, Facebook Stories and more directly to your mobile with FastVid Downloader." />
+  <meta property="og:image" content="{{ url_for('static', filename='share-image.png') }}" />
+  <meta property="og:url" content="https://fastvid-downloader.onrender.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 
@@ -50,7 +56,7 @@
       <div class="sub-options" id="subOptions"></div>
 
       <!-- Download Form -->
-      <form class="download-form" id="downloadForm">
+      <form class="download-form" method="POST" action="/download">
         <input type="text" name="url" id="urlInput" placeholder="Paste URL here..." required />
         <input type="hidden" name="platform" id="platformInput" />
         <input type="hidden" name="contentType" id="contentTypeInput" />
@@ -59,7 +65,13 @@
 
       <!-- Progress -->
       <div class="progress-box" id="progressBox">
-        Waiting for input...
+        {% if error %}
+          <span style="color:red;">{{ error }}</span>
+        {% elif message %}
+          <span style="color:green;">{{ message }}</span>
+        {% else %}
+          Waiting for input...
+        {% endif %}
       </div>
 
       <!-- Instructions -->
@@ -83,5 +95,4 @@
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
 </html>

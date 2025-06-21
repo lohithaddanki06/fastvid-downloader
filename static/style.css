@@ -13,12 +13,12 @@ html, body {
   color: #333;
 }
 
-/* Layout structure */
 body {
   display: flex;
   flex-direction: column;
 }
 
+/* Header */
 .header-bar {
   width: 100%;
   height: 70px;
@@ -30,6 +30,7 @@ body {
   color: white;
   font-size: 20px;
   font-weight: bold;
+  border-bottom: 3px solid #00aaff;
 }
 
 .logo-text {
@@ -41,6 +42,7 @@ body {
   color: #00eaff;
 }
 
+/* Container layout */
 .container {
   flex: 1;
   display: flex;
@@ -48,6 +50,7 @@ body {
   height: calc(100vh - 70px);
 }
 
+/* Sidebar */
 .sidebar {
   width: 200px;
   background-color: #111;
@@ -82,6 +85,7 @@ body {
   height: 28px;
 }
 
+/* Main content */
 .main-content {
   flex: 1;
   padding: 40px;
@@ -100,6 +104,7 @@ body {
   margin-bottom: 30px;
 }
 
+/* Sub-options */
 .sub-options {
   display: flex;
   flex-wrap: wrap;
@@ -122,10 +127,16 @@ body {
   transform: scale(1.05);
 }
 
-.option-card.active {
-  border: 2px solid #00aaff;
+.option-card i {
+  font-size: 18px;
 }
 
+.option-card.active {
+  background-color: #00aaff;
+  color: white;
+}
+
+/* Download form */
 .download-form {
   display: flex;
   gap: 10px;
@@ -153,12 +164,14 @@ body {
   background-color: #008ecc;
 }
 
+/* Progress box */
 .progress-box {
   font-weight: bold;
   color: green;
   margin-bottom: 30px;
 }
 
+/* Instructions */
 .instructions h2 {
   margin-bottom: 10px;
   font-size: 20px;
@@ -174,6 +187,7 @@ body {
   color: #888;
 }
 
+/* Footer */
 .footer {
   text-align: center;
   padding: 15px;
@@ -183,6 +197,7 @@ body {
   background-color: #f4f4f9;
 }
 
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -191,13 +206,22 @@ body {
   .sidebar {
     width: 100%;
     flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
     overflow-x: auto;
   }
 
   .sidebar ul {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .sidebar li {
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px;
   }
 
   .main-content {
@@ -206,6 +230,10 @@ body {
 
   .download-form {
     flex-direction: column;
+  }
+
+  .download-form input[type="text"] {
+    width: 100%;
   }
 
   .download-form button {
